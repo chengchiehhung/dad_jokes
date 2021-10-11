@@ -13,8 +13,18 @@ response = requests.get(
 num_jokes = response["total_jokes"]
 results = response["results"]
 if num_jokes > 1:
-    print(f"I found {num_jokes} jokes about {user_input}. Here's one:")
-    print(choice(results)["joke"])
+    answer = ""
+    while True:
+        answer = input(f"I found {num_jokes} jokes about {user_input}. Would you like to show them all? (Y/N)").lower()
+        if answer == "y" or answer == "n":
+            break
+        else:
+            print("Please enter 'Y' or 'N'")
+    if answer == "y":
+        for result in results:
+            print(result["joke"])
+    else:
+        print(f'Here\'s one: \n{choice(results)["joke"]}')
 elif num_jokes == 1:
     print(f"I found one joke about {user_input}")
     print(response["results"][0]['joke'])
